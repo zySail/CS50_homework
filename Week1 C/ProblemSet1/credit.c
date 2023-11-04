@@ -2,7 +2,6 @@
 #include <stdio.h>
 
 int getLength(long Number);
-long getInverse(long Number , int length);
 int getSum(long Number , int length);
 void check(long Number , int sum , int length);
 
@@ -15,13 +14,11 @@ int main(void)
 
     int length = getLength(Number); //get the length of the digit number
 
-    long inverse = getInverse(Number , length);
-
-    int sum = getSum(inverse , length);  //caculate the sum
+    int sum = getSum(Number , length);  //caculate the sum
 
     check(Number , sum , length); // check the answer
 
-    //printf("lenegth = %d\ninverse = %ld\nsum = %d\n", length,inverse,sum);
+    //printf("lenegth = %d\nsum = %d\n", length , sum);
 }
 
 int getLength(long Number){
@@ -33,31 +30,20 @@ int getLength(long Number){
     return length;
 }
 
-long getInverse(long Number , int length){
-    long inverse = 0;
-    for(int i = 0; i < length; i++){
-        inverse += Number % 10;
-        Number /= 10;
-        inverse *= 10;
-    }
-    inverse /= 10;
-    return inverse;
-}
-
-int getSum(long inverseNumber , int length){
+int getSum(long Number , int length){
     int sum = 0;
     int multiplyResult= 0;
-    while(inverseNumber != 0){
-        multiplyResult = 2 * (int)(inverseNumber % 10); //get the multiply number
+    while(Number != 0){
+        sum += (int)(Number % 10); //get the not multiply number
+        Number /= 10;
+        multiplyResult = 2 * (int)(Number % 10); //get the multiply number
         if(multiplyResult >= 10){
-            sum = sum + 1 + multiplyResult % 10; // 10<= multiplyResult <= 18
+            sum = sum + 1 + multiplyResult % 10; // 10 <= multiplyResult <= 18
         }
         else{
             sum += multiplyResult;
         }
-        inverseNumber /= 10;
-        sum += (int)(inverseNumber % 10); //get the not multiply number
-        inverseNumber /= 10;
+        Number /= 10;
     }
     return sum;
 }
